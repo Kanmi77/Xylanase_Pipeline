@@ -106,4 +106,9 @@ Notes:
 - The repository already contains a small `streamlit.toml` that sets the server to headless mode for reliable hosting.
 - If you update the code and push to `main`, Streamlit Cloud will automatically redeploy the app.
 
+Deployed app URL:
+
+https://xylanase.streamlit.app/
+
+
 
