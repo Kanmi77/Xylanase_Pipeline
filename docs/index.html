@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Xylanase Sequences — Table</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <style>
+      body{font-family: Arial, Helvetica, sans-serif; padding:20px}
+      h1{margin-bottom:6px}
+      .note{color:#444;font-size:0.9rem}
+    </style>
+  </head>
+  <body>
+    <h1>Xylanase Sequences</h1>
+    <p class="note">Interactive table built from the repository CSV. Use the search box or column filters. Also available as a Python Streamlit app in the repository.</p>
+
+    <table id="table" class="display" style="width:100%"></table>
+
+    <p>
+      <a href="https://github.com/Kanmi77/Xylanase_Pipeline">Repository on GitHub</a> •
+      <a href="../dashboard/streamlit_app.py">Streamlit app (run locally)</a>
+    </p>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script>
+      async function loadCSV() {
+        const resp = await fetch('/results/metadata/xylanase_sequences_metadata.csv');
+        const text = await resp.text();
+        return parseCSV(text);
+      }
+
+      function parseCSV(text){
+        const lines = text.trim().split('\n');
+        const headers = lines[0].split(',');
+        const rows = lines.slice(1).map(l => {
+          const vals = l.split(/,(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)/);
+          const obj = {};
+          headers.forEach((h,i)=> obj[h]=vals[i]||'');
+          return obj;
+        });
+        return {headers, rows};
+      }
+
+      (async ()=>{
+        const data = await loadCSV();
+        const columns = data.headers.map(h=>({title:h, data:h}));
+        $('#table').DataTable({
+          data: data.rows,
+          columns: columns,
+          pageLength: 25,
+          dom: 'frtip',
+          language: { search: "Global search:" }
+        });
+      })();
+    </script>
+  </body>
+</html>
