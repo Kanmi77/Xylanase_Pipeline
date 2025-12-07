@@ -95,3 +95,15 @@ pip install -r requirements.txt
 streamlit run dashboard/streamlit_app.py
 ```
 
+Deploying to Streamlit Cloud
+
+1. Go to https://share.streamlit.io and sign in with your GitHub account.
+2. Click "New app" → Choose your GitHub repository `Kanmi77/Xylanase_Pipeline` → branch: `main` → file path: `dashboard/streamlit_app.py`.
+3. Click "Deploy" — Streamlit Cloud will install dependencies from `requirements.txt` and start the app.
+4. After deployment, you'll get a public URL you can share.
+
+Notes:
+- The repository already contains a small `streamlit.toml` that sets the server to headless mode for reliable hosting.
+- If you update the code and push to `main`, Streamlit Cloud will automatically redeploy the app.
+
+
